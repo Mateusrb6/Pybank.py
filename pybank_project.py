@@ -1,5 +1,5 @@
 class BankAccount:
-    def __init__(self, first_name, last_name, account_id, pin, balance = 0):
+    def __init__(self, first_name, last_name, account_id, pin, balance=0):
         self.first_name = first_name
         self.last_name = last_name
         self.account_id = account_id
@@ -11,29 +11,30 @@ class BankAccount:
         if money_added < 0:
             print('deposit amount must be positive.')
             return
-        
+
         self.balance += money_added
-        print(f'Now you have {self.balance} dolars.')
-    
+        print(f'Now you have {self.balance} dollars.')
+
     def withdraw(self):
         money_withdraw = float(input('withdraw = '))
         if money_withdraw <= self.balance:
             self.balance -= money_withdraw
-            print(f'the withdraw was {money_withdraw} dolars.\n')
-            print(f'Now you have {self.balance} dolars.')
+            print(f'the withdraw was {money_withdraw} dollars.\n')
+            print(f'Now you have {self.balance} dollars.')
 
         elif money_withdraw < 0:
             print('withdraw amount must be positive')
             return
-        
+
         else:
             print('insufficient funds.')
 
     def display_balance(self):
-        print(f'You have {self.balance} dolars.')
+        print(f'You have {self.balance} dollars.')
 
     def display_welcome(self):
         print(f'Hello {self.first_name.title()} {self.last_name.title()}, Welcome to PyBank!\n')
+
 
 def beginning():
     print('\t==============')
@@ -42,7 +43,7 @@ def beginning():
 
 def enter(accounts):
     print('Do you want to register? (YES/NO)')
-    
+
     answer = str(input('').strip().upper())
 
     if answer == 'YES':
@@ -67,6 +68,7 @@ def enter(accounts):
         print('Exiting...')
         return None
 
+
 def menu_options(account):
     while True:
         print('\t--Options Menu--\n1) Deposit\n2) Withdraw\n3) Display balance\n4) Exit\n')
@@ -74,7 +76,7 @@ def menu_options(account):
 
         if options == 1:
             account.deposit()
-        elif options == 2:    
+        elif options == 2:
             account.withdraw()
         elif options == 3:
             account.display_balance()
@@ -83,7 +85,7 @@ def menu_options(account):
             return False
         else:
             print('invalid option.')
-       
+
 
 accounts = []
 
@@ -97,5 +99,4 @@ while True:
             break
     else:
         break
-
 
