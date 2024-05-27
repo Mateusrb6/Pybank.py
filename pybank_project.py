@@ -7,34 +7,39 @@ class BankAccount:
         self.balance = balance
 
     def deposit(self):
-        money_added = float(input('deposit = '))
-        if money_added < 0:
-            print('deposit amount must be positive.')
-            return
+        try:
+            money_added = float(input('deposit = '))
+            if money_added <= 0:
+                print('deposit amount must be positive.')
+                return
+            self.balance += money_added
+            print(f'Now you have {self.balance} dollars.')
+        except ValueError:
+            print('Invalid input. Please enter a number.')
 
-        self.balance += money_added
-        print(f'Now you have {self.balance} dollars.')
 
     def withdraw(self):
-        money_withdraw = float(input('withdraw = '))
-        if money_withdraw <= self.balance:
-            self.balance -= money_withdraw
-            print(f'the withdraw was {money_withdraw} dollars.\n')
-            print(f'Now you have {self.balance} dollars.')
+        try:    
+            money_withdraw = float(input('withdraw = '))
+            if money_withdraw <= self.balance:
+                self.balance -= money_withdraw
+                print(f'the withdraw was {money_withdraw} dollars.\n')
+                print(f'Now you have {self.balance} dollars.')
 
-        elif money_withdraw < 0:
-            print('withdraw amount must be positive')
-            return
+            elif money_withdraw < 0:
+                print('withdraw amount must be positive')
+                return
 
-        else:
-            print('insufficient funds.')
+            else:
+                print('insufficient funds.')
+        except ValueError:
+            print('Invalid input.')
 
     def display_balance(self):
         print(f'You have {self.balance} dollars.')
 
     def display_welcome(self):
         print(f'Hello {self.first_name.title()} {self.last_name.title()}, Welcome to PyBank!\n')
-
 
 def beginning():
     print('\t==============')
@@ -43,27 +48,28 @@ def beginning():
 
 def enter(accounts):
     print('Do you want to register? (YES/NO)')
-
-    answer = str(input('').strip().upper())
+    answer = input('').strip().upper()
 
     if answer == 'YES':
-        first_name = str(input("Enter your first name: "))
-        last_name = str(input("Enter your last name: "))
+        first_name = input("Enter your first name: ").strip()
+        last_name = input("Enter your last name: ").strip()
 
         print('\n')
 
-        account_id = int(input("Enter your account ID: "))
-        account_pin = int(input("Enter your account PIN: "))
+        try:
+            account_id = int(input("Enter your account ID: ").strip())
+            account_pin = input("Enter your account PIN (6 digits): ").strip()
 
-        if len(str(account_pin)) < 6:
-            print('password is too short. Try another.')
-            account_pin = int(input("Enter your account PIN: "))
-
-        print('\n')
-
-        account = BankAccount(first_name, last_name, account_id, account_pin)
-        account.display_welcome()
-        return account
+            while len(account_pin) != 6 or not account_pin.isdigit():
+                print('PIN must be 6 digits. Try again.')
+                account_pin = input("Enter your account PIN: ").strip()
+            
+            account = BankAccount(first_name, last_name, account_id, int(account_pin))
+            account.display_welcome()
+            return account
+        except ValueError:
+            print('Invalid input. Account ID must be an integer.')
+            return None
     else:
         print('Exiting...')
         return None
